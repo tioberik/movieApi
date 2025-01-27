@@ -1,0 +1,44 @@
+services:
+  movieapi:
+    build: .
+    container_name: movieapi_container
+    image: movieapi:latest
+    environment:
+      - BASE_URL=http://localhost:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - movie-network
+    volumes:
+      - ./posters:/app/posters
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    container_name: mysql-movieapi
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --bind-address=0.0.0.0
+    image: mysql:latest
+    networks:
+      - movie-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=movieapi
+      - MYSQL_USER=movieuser
+      - MYSQL_PASSWORD=moviepass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+networks:
+  movie-network:
+    driver: bridge
+volumes:
+  mysql-data:
+  java-data:
