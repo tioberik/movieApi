@@ -41,12 +41,8 @@ docker-compose up --build
 | `PUT`   | `/api/v1/movie/update/{movieId}`  | Ažurira film po ID-u                              |
 | `DELETE`| `/api/v1/movie/delete/{movieId}`  | Briše film po ID-u                                |
 |---------|-----------------------------------|---------------------------------------------------|
-|                                          file-controller                                        |
-|---------|-----------------------------------|---------------------------------------------------|
 | `POST`  | `/file/upload`                    | Učitavanje .png datoteka (postera)                |
 | `GET`   | `/file/{fileName}`                | Dohvaćanje učitanih datoteka                      |
-|---------|-----------------------------------|---------------------------------------------------|
-|                                          auth-controller                                        |
 |---------|-----------------------------------|---------------------------------------------------|
 | `POST`  | `/api/v1/auth/register`           | Registracija korisnika                            |
 | `POST`  | `/api/v1/auth/login`              | Login korisnika                                   |
