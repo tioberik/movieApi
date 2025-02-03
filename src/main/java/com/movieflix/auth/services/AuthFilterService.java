@@ -27,6 +27,7 @@ public class AuthFilterService extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
@@ -41,15 +42,15 @@ public class AuthFilterService extends OncePerRequestFilter {
             return;
         }
 
-        // extract JWT token from header
-        jwt = authHeader.substring(7); //Bearer has 7 letters
+        // extract JWT
+        jwt = authHeader.substring(7);
 
-        // extract userName from header
+        // extract username from JWT
         username = jwtService.extractUsername(jwt);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            if(jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -63,6 +64,7 @@ public class AuthFilterService extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+
         filterChain.doFilter(request, response);
     }
 }

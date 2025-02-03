@@ -24,7 +24,7 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(String username) {
         User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Nije pronađen korisnik s e-mailom : " + username + "!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + username));
 
         RefreshToken refreshToken = user.getRefreshToken();
 
@@ -44,12 +44,11 @@ public class RefreshTokenService {
 
     public RefreshToken verifyRefreshToken(String refreshToken) {
         RefreshToken refToken = refreshTokenRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new RuntimeException("Nije pronađen Refresh Token!"));
+                .orElseThrow(() -> new RuntimeException("Refresh token not found!"));
 
-        if (refToken.getExpirationTime().isBefore(Instant.now())) {
+        if (refToken.getExpirationTime().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(refToken);
-            refreshTokenRepository.flush();
-            throw new RuntimeException("Refresh Token je istekao!");
+            throw new RuntimeException("Refresh Token expired");
         }
 
         return refToken;

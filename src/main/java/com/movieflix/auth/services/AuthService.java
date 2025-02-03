@@ -6,7 +6,6 @@ import com.movieflix.auth.repositories.UserRepository;
 import com.movieflix.auth.utils.AuthResponse;
 import com.movieflix.auth.utils.LoginRequest;
 import com.movieflix.auth.utils.RegisterRequest;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
