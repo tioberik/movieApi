@@ -7,7 +7,7 @@ Aplikacija koristi **Spring Boot, Maven, MySQL** i pokreće se unutar **Docker k
 
 ## 🚀 Pokretanje projekta
 
-### 1️⃣ **Kloni repozitorij** (ako koristiš Git)
+### 1️⃣ **Kloniraj repozitorij**
 ```bash
 git clone https://github.com/tioberik/movieApi
 cd movieApi
